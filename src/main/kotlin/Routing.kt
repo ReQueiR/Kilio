@@ -1,16 +1,16 @@
 package com.example
 
+import com.example.model.FileMetadata
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import java.io.File
 
 fun Application.configureRouting() {
     routing {
-        get("/") {
-            call.respondText("Hello, World!")
-        }
-        get("/json/kotlinx-serialization") {
-            call.respond(mapOf("hello" to "world"))
+        get("/file{id}") {
+            val file = FileMetadata(call.parameters["id"]!!)
+            call.respondFile(File("/storage/$file.storedName"))
         }
     }
 }
