@@ -1,16 +1,23 @@
 package com.example
 
-import com.example.model.FileMetadata
+import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.*
+import io.ktor.server.request.receive
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import java.io.File
 
 fun Application.configureRouting() {
+    var txt: String = ""
+
     routing {
-        get("/file{id}") {
-            val file = FileMetadata(call.parameters["id"]!!)
-            call.respondFile(File("/storage/$file.storedName"))
+        post {
+            try {
+                txt = call.receive<String>()
+                call.respond(HttpStatusCode.OK, "Good job!")
+            } catch (_: IllegalStateException) {
+                call.respond(HttpStatusCode.BadRequest, "Failed!")
+            }
         }
+        get { call.respondText(txt) }
     }
 }
