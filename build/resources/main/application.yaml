@@ -3,8 +3,8 @@ ktor:
     port: 8080
   application:
     modules:
-      - com.example.SerializationKt.configureSerialization
-      - com.example.SecurityKt.configureSecurity
-      - com.example.ExposedKt.configureExposed
-      - com.example.KoinKt.configureKoin
-      - com.example.RoutingKt.configureRouting
+      - com.example.plugins.SerializationKt.configureSerialization
+      - com.example.plugins.SecurityKt.configureSecurity
+      - com.example.config.DatabaseKt.configureDatabase
+      - com.example.plugins.KoinKt.configureKoin
+      - com.example.plugins.RoutingKt.configureRouting

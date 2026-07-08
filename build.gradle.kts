@@ -33,6 +33,7 @@ dependencies {
     implementation(libs.logback.classic)
     implementation("org.postgresql:postgresql:42.7.3")
     implementation("org.flywaydb:flyway-core:12.10.0")
+    implementation("org.flywaydb:flyway-database-postgresql:12.10.0")
 
     testImplementation(kotlin("test"))
     testImplementation(ktorLibs.server.testHost)
