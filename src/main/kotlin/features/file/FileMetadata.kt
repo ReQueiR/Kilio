@@ -1,4 +1,4 @@
-package com.example.features.File
+package com.example.features.file
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable

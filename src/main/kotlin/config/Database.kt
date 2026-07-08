@@ -1,20 +1,14 @@
 package com.example.config
 
-import com.example.ExposedUser
-import com.example.ExposedUserService
-import io.ktor.http.HttpStatusCode
+import com.example.features.file.FileRepository
+import com.example.features.link.LinkService
+import com.example.features.user.UserService
 import io.ktor.server.application.*
-import io.ktor.server.request.receive
-import io.ktor.server.response.respond
-import io.ktor.server.routing.delete
-import io.ktor.server.routing.get
-import io.ktor.server.routing.post
-import io.ktor.server.routing.put
-import io.ktor.server.routing.routing
-import org.jetbrains.exposed.v1.jdbc.*
+import io.ktor.server.routing.*
 import org.flywaydb.core.Flyway
 import org.jetbrains.exposed.v1.core.dao.id.java.UUIDTable
 import org.jetbrains.exposed.v1.datetime.timestampWithTimeZone
+import org.jetbrains.exposed.v1.jdbc.*
 
 suspend fun Application.configureExposed() {
     val dbUrl = "jdbc:postgresql://localhost:5432/postgres"
@@ -29,7 +23,9 @@ suspend fun Application.configureExposed() {
 
     val database = Database.connect(dbUrl, driver = dbDriver, user = dbUsername, password = dbPassword)
 
-    val userService = ExposedUserService(database)
+    val fileService = FileRepository(database)
+    val userService = UserService(database)
+    val linkService = LinkService(database)
 
     routing {
 

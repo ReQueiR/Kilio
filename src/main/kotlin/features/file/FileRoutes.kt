@@ -1,4 +1,4 @@
-package com.example.features.File
+package com.example.features.file
 
 class FileRoutes {
 }
