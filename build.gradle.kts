@@ -26,9 +26,13 @@ dependencies {
     implementation(libs.exposed.r2dbc)
     implementation(libs.h2database.h2)
     implementation(libs.h2database.r2dbc)
+    implementation(libs.exposed.jdbc)
+    implementation(libs.exposed.kotlin.datetime)
     implementation(libs.koin.ktor)
     implementation(libs.koin.loggerSlf4j)
     implementation(libs.logback.classic)
+    implementation("org.postgresql:postgresql:42.7.3")
+    implementation("org.flywaydb:flyway-core:12.10.0")
 
     testImplementation(kotlin("test"))
     testImplementation(ktorLibs.server.testHost)

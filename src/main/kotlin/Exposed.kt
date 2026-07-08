@@ -9,17 +9,25 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.put
 import io.ktor.server.routing.routing
-import org.jetbrains.exposed.v1.r2dbc.R2dbcDatabase
+import org.jetbrains.exposed.v1.jdbc.*
+import org.flywaydb.core.Flyway
+import org.jetbrains.exposed.v1.core.dao.id.java.UUIDTable
+import org.jetbrains.exposed.v1.datetime.timestampWithTimeZone
 
 suspend fun Application.configureExposed() {
-    val database = R2dbcDatabase.connect(
-        url = "r2dbc:h2:file:///./h2",
-        user = "root",
-        password = "",
-    )
-    val userService = ExposedUserService(database).also {
-        it.createSchema()
-    }
+    val dbUrl = "jdbc:postgresql://localhost:5432/postgres"
+    val dbUsername = "user"
+    val dbPassword = "password"
+    val dbDriver = "org.postgresql.Driver"
+
+    val flyway = Flyway.configure().dataSource(dbUrl, dbUsername, dbPassword)
+        .load()
+
+    flyway.migrate()
+
+    val database = Database.connect(dbUrl, driver = dbDriver, user = dbUsername, password = dbPassword)
+
+    val userService = ExposedUserService(database)
 
     routing {
         // Create user
@@ -55,4 +63,12 @@ suspend fun Application.configureExposed() {
             call.respond(HttpStatusCode.NoContent)
         }
     }
+}
+
+object FileMetadataTable : UUIDTable("file_metadata") {
+    val originalName = varchar("original_name", length = 255)
+    val storedName = varchar("stored_name", length = 255).uniqueIndex()
+    val type = varchar("type", length = 55)
+    val sizeBytes = long("size_bytes")
+    val uploadedAt = timestampWithTimeZone("uploaded_at")
 }

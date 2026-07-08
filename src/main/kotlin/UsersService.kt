@@ -5,14 +5,14 @@ import kotlinx.coroutines.flow.singleOrNull
 import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.v1.core.*
 import org.jetbrains.exposed.v1.core.dao.id.UIntIdTable
+import org.jetbrains.exposed.v1.jdbc.Database
+import org.jetbrains.exposed.v1.jdbc.transactions.suspendTransaction
 import org.jetbrains.exposed.v1.r2dbc.*
-import org.jetbrains.exposed.v1.r2dbc.transactions.suspendTransaction
-import org.jetbrains.exposed.v1.r2dbc.R2dbcDatabase
 
 @Serializable
 data class ExposedUser(val name: String, val age: Int)
 
-class ExposedUserService(val database: R2dbcDatabase) {
+class ExposedUserService(val database: Database) {
     object Users : UIntIdTable() {
         val name = varchar("name", length = 50)
         val age = integer("age")
