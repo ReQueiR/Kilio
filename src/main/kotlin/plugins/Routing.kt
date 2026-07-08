@@ -1,4 +1,4 @@
-package com.example
+package com.example.plugins
 
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.*

@@ -1,5 +1,6 @@
-package com.example
+package com.example.plugins
 
+import com.example.config.HelloService
 import io.ktor.server.application.*
 import org.koin.dsl.module
 import org.koin.ktor.plugin.Koin

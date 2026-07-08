@@ -1,4 +1,4 @@
-package com.example
+package com.example.features.File
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -8,7 +8,6 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import java.util.UUID
 import kotlin.time.Instant
-import kotlin.uuid.Uuid
 
 @Serializable
 data class FileMetadata(
