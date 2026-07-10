@@ -1,12 +1,12 @@
 package com.example.features.file
 
-import com.example.config.FileMetadataTable
-import com.example.config.FileMetadataTable.id
-import com.example.config.FileMetadataTable.originalName
-import com.example.config.FileMetadataTable.sizeBytes
-import com.example.config.FileMetadataTable.storedName
-import com.example.config.FileMetadataTable.type
-import com.example.config.FileMetadataTable.uploadedAt
+import com.example.features.file.FileMetadataTable.id
+import com.example.features.file.FileMetadataTable.category
+import com.example.features.file.FileMetadataTable.originalName
+import com.example.features.file.FileMetadataTable.sizeBytes
+import com.example.features.file.FileMetadataTable.storedName
+import com.example.features.file.FileMetadataTable.type
+import com.example.features.file.FileMetadataTable.uploadedAt
 import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.jdbc.insert
 import org.jetbrains.exposed.v1.jdbc.selectAll
@@ -20,7 +20,8 @@ class FileRepository  {
                 it[id] = UUID.randomUUID()
                 it[originalName] = file.originalName
                 it[storedName] = file.storedName
-                it[type] = file.type.name
+                it[type] = file.type
+                it[category] = file.category.name
                 it[sizeBytes] = file.sizeBytes
             }
         }
@@ -28,14 +29,16 @@ class FileRepository  {
 
     fun findAll(): List<FileMetadata> {
         return FileMetadataTable.selectAll()
-            .map { row -> FileMetadata(
-                id = row[id].value,
-                originalName = row[originalName],
-                storedName = row[storedName],
-                type = FileCategory.valueOf(row[type]),
-                sizeBytes = row[sizeBytes],
-                uploadedAt = row[uploadedAt]
-            )
+            .map { row ->
+                FileMetadata(
+                    id = row[id].value,
+                    originalName = row[originalName],
+                    storedName = row[storedName],
+                    category = FileCategory.valueOf(row[category]),
+                    type = row[type],
+                    sizeBytes = row[sizeBytes],
+                    uploadedAt = row[uploadedAt]
+                )
         }
     }
 
@@ -46,7 +49,8 @@ class FileRepository  {
                 id = row[FileMetadataTable.id].value,
                 originalName = row[originalName],
                 storedName = row[storedName],
-                type = FileCategory.valueOf(row[type]),
+                category = FileCategory.valueOf(row[type]),
+                type = row[type],
                 sizeBytes = row[sizeBytes],
                 uploadedAt = row[uploadedAt]
             )}

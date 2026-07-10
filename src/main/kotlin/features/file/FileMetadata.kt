@@ -7,7 +7,8 @@ data class FileMetadata(
     val id: UUID,
     val originalName: String,
     val storedName: String,
-    val type: FileCategory,
+    val category: FileCategory,
+    val type: String,
     val sizeBytes: Long,
     val uploadedAt: OffsetDateTime,
 )
