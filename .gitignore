@@ -1,0 +1,18 @@
+
+# Gradle
+.gradle/
+build/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Application data
+uploads/
+*.mv.db
+*.trace.db
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
