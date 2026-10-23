@@ -19,9 +19,11 @@ fun Application.configureRouting() {
             val result = fileService.uploadFile(multipartData, "uploads")
             call.respond(HttpStatusCode.Created, result.toResponse())
         }
+
         get("/ping") {
             call.respondText("PONG!")
         }
+
         post("/upload2") {
             //
         }
